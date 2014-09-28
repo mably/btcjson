@@ -301,22 +301,23 @@ type GetWorkResult struct {
 
 // InfoResult contains the data returned by the getinfo command.
 type InfoResult struct {
-	Version         int32   `json:"version"`
-	ProtocolVersion int32   `json:"protocolversion"`
-	WalletVersion   int32   `json:"walletversion,omitempty"`
-	Balance         float64 `json:"balance,omitempty"`
-	Blocks          int32   `json:"blocks"`
-	TimeOffset      int64   `json:"timeoffset"`
-	Connections     int32   `json:"connections"`
-	Proxy           string  `json:"proxy"`
-	Difficulty      float64 `json:"difficulty"`
-	TestNet         bool    `json:"testnet"`
-	KeypoolOldest   int64   `json:"keypoololdest,omitempty"`
-	KeypoolSize     int32   `json:"keypoolsize,omitempty"`
-	UnlockedUntil   int64   `json:"unlocked_until,omitempty"`
-	PaytxFee        float64 `json:"paytxfee,omitempty"`
-	RelayFee        float64 `json:"relayfee"`
-	Errors          string  `json:"errors"`
+	Version         int32       `json:"version"`
+	ProtocolVersion int32       `json:"protocolversion"`
+	WalletVersion   int32       `json:"walletversion,omitempty"`
+	Balance         float64     `json:"balance,omitempty"`
+	MoneySupply     FloatAmount `json:"moneysupply"`
+	Blocks          int32       `json:"blocks"`
+	TimeOffset      int64       `json:"timeoffset"`
+	Connections     int32       `json:"connections"`
+	Proxy           string      `json:"proxy"`
+	Difficulty      float64     `json:"difficulty"`
+	TestNet         bool        `json:"testnet"`
+	KeypoolOldest   int64       `json:"keypoololdest,omitempty"`
+	KeypoolSize     int32       `json:"keypoolsize,omitempty"`
+	UnlockedUntil   int64       `json:"unlocked_until,omitempty"`
+	PaytxFee        float64     `json:"paytxfee,omitempty"`
+	RelayFee        float64     `json:"relayfee"`
+	Errors          string      `json:"errors"`
 }
 
 // ListTransactionsResult models the data from the listtransactions command.
