@@ -15,3 +15,10 @@ type FloatAmount float64
 func (v *FloatAmount) MarshalJSON() ([]byte, error) {
 	return []byte(fmt.Sprintf("%.6f", *v)), nil
 }
+
+// GetDifficultyResult models the data of getdifficulty command.
+type GetDifficultyResult struct {
+	ProofOfWork    float64 `json:"proof-of-work"`
+	ProofOfStake   float64 `json:"proof-of-stake"`
+	SearchInterval int32   `json:"search-interval"`
+}
