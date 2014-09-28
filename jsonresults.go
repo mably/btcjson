@@ -304,7 +304,7 @@ type InfoResult struct {
 	Version         int32       `json:"version"`
 	ProtocolVersion int32       `json:"protocolversion"`
 	WalletVersion   int32       `json:"walletversion,omitempty"`
-	Balance         float64     `json:"balance,omitempty"`
+	Balance         FloatAmount `json:"balance,omitempty"`
 	MoneySupply     FloatAmount `json:"moneysupply"`
 	Blocks          int32       `json:"blocks"`
 	TimeOffset      int64       `json:"timeoffset"`
