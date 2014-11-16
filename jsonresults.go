@@ -362,7 +362,7 @@ type ListReceivedByAddressResult struct {
 	Address           string   `json:"address"`
 	Amount            float64  `json:"amount"`
 	Confirmations     uint64   `json:"confirmations"`
-	Tx                []string `json:"tx,omitempty"`
+	TxIDs             []string `json:"txids,omitempty"`
 	InvolvesWatchonly bool     `json:"involvesWatchonly,omitempty"`
 }
 
@@ -427,6 +427,7 @@ type ValidateAddressResult struct {
 	IsValid      bool     `json:"isvalid"`
 	Address      string   `json:"address,omitempty"`
 	IsMine       bool     `json:"ismine,omitempty"`
+	IsWatchOnly  bool     `json:"iswatchonly,omitempty"`
 	IsScript     bool     `json:"isscript,omitempty"`
 	PubKey       string   `json:"pubkey,omitempty"`
 	IsCompressed bool     `json:"iscompressed,omitempty"`
@@ -581,7 +582,7 @@ func ReadResultCmd(cmd string, message []byte) (Reply, error) {
 		var res *GetNetworkInfoResult
 		err = json.Unmarshal(objmap["result"], &res)
 		if err == nil {
-			if res.LocalAddresses == nil {
+			if res != nil && res.LocalAddresses == nil {
 				res.LocalAddresses = []LocalAddressesResult{}
 			}
 			result.Result = res
