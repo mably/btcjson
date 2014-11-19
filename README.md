@@ -3,6 +3,7 @@ btcjson
 
 [![Build Status](https://travis-ci.org/mably/btcjson.png?branch=master)]
 (https://travis-ci.org/mably/btcjson)
+[![tip for next commit](http://peer4commit.com/projects/130.svg)](http://peer4commit.com/projects/130)
 
 Package btcjson implements the bitcoin JSON-RPC API.  There is a test
 suite which is aiming to reach 100% code coverage.  See
