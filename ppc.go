@@ -8,7 +8,7 @@ import (
 	"fmt"
 )
 
-// FloatAmount.
+// FloatAmount specific type with custom marshalling
 type FloatAmount float64
 
 // MarshalJSON provides a custom Marshal method for FloatAmount.
