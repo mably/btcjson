@@ -263,8 +263,12 @@ Returns the number of connections to other nodes currently active as a JSON
 number.`,
 
 	"getdifficulty": `getdifficulty
-Returns the proof-of-work difficulty as a JSON number. The result is a
-multiple of the minimum difficulty.`,
+Returns a JSON object containing PoS and PoW difficulty:
+{
+	"proof-of-work":n,		# Numeric PoW current difficulty.
+	"proof-of-stake":n,		# Numeric PoS current difficulty.
+	"search-interval":n,		# Numeric PoS search interval.
+}`, /* ppc: peercoin has two difficulties for PoW and PoS */
 
 	"getgenerate": `getgenerate
 Returns JSON boolean whether or not the server is set to "mine" coins or not.`,
@@ -416,7 +420,7 @@ following information about txid is returned:
 Returns the total amount of BTC received by addresses related to "account".
 Only transactions with at least "minconf" confirmations are considered.`,
 
-	"getreceivedbyaddress": `getreceivedbyaddress "address" ( minconf=1 ) 
+	"getreceivedbyaddress": `getreceivedbyaddress "address" ( minconf=1 )
 Returns the total amount of BTC received by the given address. Only transactions
 with "minconf" confirmations will be used for the total.`,
 
@@ -571,7 +575,7 @@ with "minconf" confirmations are listed.
 	"transactions":[
 		"account"		# String of account related to the transaction.
 		"address"		# String of related address of transaction.
-		"category":"send|receive"	# String detailing whether transaction was a send or receive of funds.	
+		"category":"send|receive"	# String detailing whether transaction was a send or receive of funds.
 		"amount":n,		# Numeric value of transaction. Negative if transaction category was "send"
 		"fee":n,		# Numeric value of transaction fee in BTC.
 		"confirmations":n,	# Number of transaction confirmations
@@ -594,7 +598,7 @@ accounts if none specified) skipping the first "from" transactions.
 	"transactions":[
 		"account"		# String of account related to the transaction.
 		"address"		# String of related address of transaction.
-		"category":"send|receive|move"	# String detailing whether transaction was a send or receive of funds.Move is a local move between accounts and doesnt touch the blockchain.	
+		"category":"send|receive|move"	# String detailing whether transaction was a send or receive of funds.Move is a local move between accounts and doesnt touch the blockchain.
 		"amount":n,		# Numeric value of transaction. Negative if transaction category was "send"
 		"fee":n,		# Numeric value of transaction fee in BTC.
 		"confirmations":n,	# Number of transaction confirmations
