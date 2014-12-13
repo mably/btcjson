@@ -331,6 +331,9 @@ func ParseMarshaledCmd(b []byte) (Cmd, error) {
 	case "walletpassphrasechange":
 		cmd = new(WalletPassphraseChangeCmd)
 
+	case "getkernelstakemodifier": // ppc:
+		cmd = new(GetKernelStakeModifierCmd)
+
 	default:
 		// None of the standard Bitcoin RPC methods matched.  Try
 		// registered custom commands.
