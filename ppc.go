@@ -7,6 +7,7 @@ package btcjson
 import (
 	"encoding/json"
 	"fmt"
+	"strconv"
 )
 
 // FloatAmount specific type with custom marshalling
@@ -56,9 +57,9 @@ func NewGetKernelStakeModifierCmd(id interface{}, hash string, optArgs ...bool) 
 	}
 
 	return &GetKernelStakeModifierCmd{
-		id:        id,
-		Hash:      hash,
-		Verbose:   verbose,
+		id:      id,
+		Hash:    hash,
+		Verbose: verbose,
 	}, nil
 }
 
@@ -124,10 +125,28 @@ func (cmd *GetKernelStakeModifierCmd) UnmarshalJSON(b []byte) error {
 	return nil
 }
 
+// StakeModifier specific type with custom marshalling
+type StakeModifier uint64
+
+// MarshalJSON provides a custom Marshal method for StakeModifier.
+func (v StakeModifier) MarshalJSON() ([]byte, error) {
+	return []byte(fmt.Sprintf("\"%d\"", uint64(v))), nil
+}
+
+// UnmarshalJSON provides a custom Unmarshal method for StakeModifier.
+func (v *StakeModifier) UnmarshalJSON(b []byte) (err error) {
+	var s string
+	json.Unmarshal(b, &s)
+	var u uint64
+	u, err = strconv.ParseUint(s, 0, 64)
+	*v = StakeModifier(u)
+	return
+}
+
 // KernelStakeModifierResult models the data from the getkernelstakemodifier
 // command when the verbose flag is set.  When the verbose flag is not set,
 // getkernelstakemodifier return a hex-encoded string.
 type KernelStakeModifierResult struct {
-	Hash                string `json:"hash"`
-	KernelStakeModifier uint64 `json:"kernelstakemodifier"`
+	Hash                string        `json:"hash"`
+	KernelStakeModifier StakeModifier `json:"kernelstakemodifier"`
 }
