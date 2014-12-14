@@ -150,3 +150,121 @@ type KernelStakeModifierResult struct {
 	Hash                string        `json:"hash"`
 	KernelStakeModifier StakeModifier `json:"kernelstakemodifier"`
 }
+
+// GetNextRequiredTargetCmd is a type handling custom marshaling and
+// unmarshaling of getNextRequiredTarget JSON RPC commands.
+type GetNextRequiredTargetCmd struct {
+	id           interface{}
+	ProofOfStake bool
+	Verbose      bool
+}
+
+// Enforce that GetNextRequiredTargetCmd satisifies the Cmd interface.
+var _ Cmd = &GetNextRequiredTargetCmd{}
+
+// NewGetNextRequiredTargetCmd creates a new GetNextRequiredTargetCmd.
+func NewGetNextRequiredTargetCmd(id interface{}, proofOfStake bool, optArgs ...bool) (*GetNextRequiredTargetCmd, error) {
+	// default verbose is set to true to match old behavior
+	verbose := true
+
+	optArgsLen := len(optArgs)
+	if optArgsLen > 0 {
+		if optArgsLen > 1 {
+			return nil, ErrTooManyOptArgs
+		}
+		verbose = optArgs[0]
+	}
+
+	return &GetNextRequiredTargetCmd{
+		id:           id,
+		ProofOfStake: proofOfStake,
+		Verbose:      verbose,
+	}, nil
+}
+
+// Id satisfies the Cmd interface by returning the id of the command.
+func (cmd *GetNextRequiredTargetCmd) Id() interface{} {
+	return cmd.id
+}
+
+// Method satisfies the Cmd interface by returning the json method.
+func (cmd *GetNextRequiredTargetCmd) Method() string {
+	return "getnextrequiredtarget"
+}
+
+// MarshalJSON returns the JSON encoding of cmd.  Part of the Cmd interface.
+func (cmd *GetNextRequiredTargetCmd) MarshalJSON() ([]byte, error) {
+	params := make([]interface{}, 1, 3)
+	params[0] = cmd.ProofOfStake
+	if !cmd.Verbose {
+		// set optional verbose argument to false
+		params = append(params, false)
+	}
+	// Fill and marshal a RawCmd.
+	raw, err := NewRawCmd(cmd.id, cmd.Method(), params)
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(raw)
+}
+
+// UnmarshalJSON unmarshals the JSON encoding of cmd into cmd.  Part of
+// the Cmd interface.
+func (cmd *GetNextRequiredTargetCmd) UnmarshalJSON(b []byte) error {
+	// Unmashal into a RawCmd
+	var r RawCmd
+	if err := json.Unmarshal(b, &r); err != nil {
+		return err
+	}
+
+	if len(r.Params) > 2 || len(r.Params) < 1 {
+		return ErrWrongNumberOfParams
+	}
+
+	var proofOfStake bool
+	if err := json.Unmarshal(r.Params[0], &proofOfStake); err != nil {
+		return fmt.Errorf("parameter 'proofofstake' must be a bool: %v", err)
+	}
+
+	optArgs := make([]bool, 0, 2)
+	if len(r.Params) > 1 {
+		var verbose bool
+		if err := json.Unmarshal(r.Params[1], &verbose); err != nil {
+			return fmt.Errorf("second optional parameter 'verbose' must be a bool: %v", err)
+		}
+		optArgs = append(optArgs, verbose)
+	}
+
+	newCmd, err := NewGetNextRequiredTargetCmd(r.Id, proofOfStake, optArgs...)
+	if err != nil {
+		return err
+	}
+
+	*cmd = *newCmd
+	return nil
+}
+
+// StakeModifier specific type with custom marshalling
+type RequiredTarget uint32
+
+// MarshalJSON provides a custom Marshal method for StakeModifier.
+func (v RequiredTarget) MarshalJSON() ([]byte, error) {
+	return []byte(fmt.Sprintf("\"%d\"", uint32(v))), nil
+}
+
+// UnmarshalJSON provides a custom Unmarshal method for StakeModifier.
+func (v *RequiredTarget) UnmarshalJSON(b []byte) (err error) {
+	var s string
+	json.Unmarshal(b, &s)
+	var u uint64
+	u, err = strconv.ParseUint(s, 0, 32)
+	*v = RequiredTarget(u)
+	return
+}
+
+// NextRequiredTargetResult models the data from the getnextrequiredtarget
+// command when the verbose flag is set.  When the verbose flag is not set,
+// getnextrequiredtarget return a simple string.
+type NextRequiredTargetResult struct {
+	Difficulty RequiredTarget `json:"target"`
+}
