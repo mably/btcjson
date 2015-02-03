@@ -504,6 +504,9 @@ blockchain will be scanned for transaction.`,
 	"importwallet": `importwallet "filename"
 Imports keys from the wallet dump file in "filename".`,
 
+	"invalidateblock": `invalidateblock "hash"
+Mark block specified by "hash" as invalid.`,
+
 	"keypoolrefill": `keypoolrefill ( newsize=100 )
 Refills the wallet pregenerated key pool to a size of "newsize"`,
 
@@ -648,6 +651,54 @@ to denode success.`,
 	"ping": `ping
 Queues a ping to be sent to each connected peer. Ping times are provided in
 getpeerinfo.`,
+
+	"reconsiderblock": `reconsiderblock "hash"
+Remove invalid mark from block specified by "hash" so it is considered again.`,
+
+	"searchrawtransaction": `searchrawtransaction "address" (verbose=1 skip=0 count=100)
+Returns raw tx data related to credits or debits to "address". Skip indicates
+the number of leading transactions to leave out of the final result. Count 
+represents the max number of transactions to return. If verbose is false, a 
+string containing hex-encoded serialized data for txid. If verbose is true a 
+JSON object with the following information about txid is returned:
+{
+	"hex":"data",	# String of serialized, hex encoded data for txid.
+	"txid":"id",	# String containing the transaction id (same as "txid" parameter)
+	"version":n	# Numeric tx version number.
+	"locktime":t,	# Transaction locktime.
+	"vin":[		# Array of objects representing transaction inputs.
+		{
+			"txid":"id",	# Spent transaction id as a string.
+			"vout""n,	# Spent transaction output no.
+			"scriptSig":{	# Signature script as an object.
+				"asm":"asm",	# Disassembled script string.
+				"hex":"hex",	# Hex serialized string.
+			},
+			"sequence":n,	# Script sequence number.
+		},
+		...
+	],
+	vout:[		# Array of objects representing transaction outputs.
+		{
+			"value":n,	# Numeric value of output in btc.
+			"n", n,		# Numeric output index.
+			"scriptPubKey":{	# Object representing pubkey script.
+				"asm":"asm"	# Disassembled string of script.
+				"hex":"hex"	# Hex serialized string.
+				"reqSigs":n,	# Number of required signatures.
+				"type":"pubkey",	# Type of scirpt. e.g.  pubkeyhash" or "pubkey".
+				"addresses":[		# Array of address strings.
+					"address",	# Bitcoin address.
+					...
+				],
+			}
+		}
+	],
+	"blockhash":"hash"	# Hash of the block the transaction is part of.
+	"confirmations":n,	# Number of numeric confirmations of block.
+	"time":t,		# Transaction time in seconds since the epoch.
+	"blocktime":t,		# Block time in seconds since the epoch.
+}`,
 
 	"sendfrom": `sendfrom "fromaccount" "tobitcoinaddress" amount ( minconf=1 "comment" "comment-to" )
 Sends "amount" (rounded to the nearest 0.00000001) to
