@@ -244,6 +244,9 @@ func ParseMarshaledCmd(b []byte) (Cmd, error) {
 	case "importwallet":
 		cmd = new(ImportWalletCmd)
 
+	case "invalidateblock":
+		cmd = new(InvalidateBlockCmd)
+
 	case "keypoolrefill":
 		cmd = new(KeyPoolRefillCmd)
 
@@ -279,6 +282,12 @@ func ParseMarshaledCmd(b []byte) (Cmd, error) {
 
 	case "ping":
 		cmd = new(PingCmd)
+
+	case "reconsiderblock":
+		cmd = new(ReconsiderBlockCmd)
+
+	case "searchrawtransaction":
+		cmd = new(SearchRawTransactionCmd)
 
 	case "sendfrom":
 		cmd = new(SendFromCmd)
@@ -399,7 +408,7 @@ func (cmd *unparsableCmd) MarshalJSON() ([]byte, error) {
 // UnmarshalJSON unmarshals the JSON encoding of cmd into cmd.  Part of
 // the Cmd interface.
 func (cmd *unparsableCmd) UnmarshalJSON(b []byte) error {
-	// Unmashal into a RawCmd
+	// Unmarshal into a RawCmd
 	var r RawCmd
 	if err := json.Unmarshal(b, &r); err != nil {
 		return err
@@ -475,7 +484,7 @@ func (cmd *AddMultisigAddressCmd) MarshalJSON() ([]byte, error) {
 // UnmarshalJSON unmarshals the JSON encoding of cmd into cmd.  Part of
 // the Cmd interface.
 func (cmd *AddMultisigAddressCmd) UnmarshalJSON(b []byte) error {
-	// Unmashal into a RawCmd
+	// Unmarshal into a RawCmd
 	var r RawCmd
 	if err := json.Unmarshal(b, &r); err != nil {
 		return err
@@ -646,7 +655,7 @@ func (cmd *BackupWalletCmd) MarshalJSON() ([]byte, error) {
 // UnmarshalJSON unmarshals the JSON encoding of cmd into cmd.  Part of
 // the Cmd interface.
 func (cmd *BackupWalletCmd) UnmarshalJSON(b []byte) error {
-	// Unmashal into a RawCmd
+	// Unmarshal into a RawCmd
 	var r RawCmd
 	if err := json.Unmarshal(b, &r); err != nil {
 		return err
@@ -719,7 +728,7 @@ func (cmd *CreateMultisigCmd) MarshalJSON() ([]byte, error) {
 // UnmarshalJSON unmarshals the JSON encoding of cmd into cmd.  Part of
 // the Cmd interface.
 func (cmd *CreateMultisigCmd) UnmarshalJSON(b []byte) error {
-	// Unmashal into a RawCmd
+	// Unmarshal into a RawCmd
 	var r RawCmd
 	if err := json.Unmarshal(b, &r); err != nil {
 		return err
@@ -808,7 +817,7 @@ func (cmd *CreateRawTransactionCmd) MarshalJSON() ([]byte, error) {
 // UnmarshalJSON unmarshals the JSON encoding of cmd into cmd.  Part of
 // the Cmd interface.
 func (cmd *CreateRawTransactionCmd) UnmarshalJSON(b []byte) error {
-	// Unmashal into a RawCmd
+	// Unmarshal into a RawCmd
 	var r RawCmd
 	if err := json.Unmarshal(b, &r); err != nil {
 		return err
@@ -894,7 +903,7 @@ func (cmd *DebugLevelCmd) MarshalJSON() ([]byte, error) {
 // UnmarshalJSON unmarshals the JSON encoding of cmd into cmd.  Part of
 // the Cmd interface.
 func (cmd *DebugLevelCmd) UnmarshalJSON(b []byte) error {
-	// Unmashal into a RawCmd
+	// Unmarshal into a RawCmd
 	var r RawCmd
 	if err := json.Unmarshal(b, &r); err != nil {
 		return err
@@ -963,7 +972,7 @@ func (cmd *DecodeRawTransactionCmd) MarshalJSON() ([]byte, error) {
 // UnmarshalJSON unmarshals the JSON encoding of cmd into cmd.  Part of
 // the Cmd interface.
 func (cmd *DecodeRawTransactionCmd) UnmarshalJSON(b []byte) error {
-	// Unmashal into a RawCmd
+	// Unmarshal into a RawCmd
 	var r RawCmd
 	if err := json.Unmarshal(b, &r); err != nil {
 		return err
@@ -1032,7 +1041,7 @@ func (cmd *DecodeScriptCmd) MarshalJSON() ([]byte, error) {
 // UnmarshalJSON unmarshals the JSON encoding of cmd into cmd.  Part of
 // the Cmd interface.
 func (cmd *DecodeScriptCmd) UnmarshalJSON(b []byte) error {
-	// Unmashal into a RawCmd
+	// Unmarshal into a RawCmd
 	var r RawCmd
 	if err := json.Unmarshal(b, &r); err != nil {
 		return err
@@ -1101,7 +1110,7 @@ func (cmd *DumpPrivKeyCmd) MarshalJSON() ([]byte, error) {
 // UnmarshalJSON unmarshals the JSON encoding of cmd into cmd.  Part of
 // the Cmd interface.
 func (cmd *DumpPrivKeyCmd) UnmarshalJSON(b []byte) error {
-	// Unmashal into a RawCmd
+	// Unmarshal into a RawCmd
 	var r RawCmd
 	if err := json.Unmarshal(b, &r); err != nil {
 		return err
@@ -1170,7 +1179,7 @@ func (cmd *DumpWalletCmd) MarshalJSON() ([]byte, error) {
 // UnmarshalJSON unmarshals the JSON encoding of cmd into cmd.  Part of
 // the Cmd interface.
 func (cmd *DumpWalletCmd) UnmarshalJSON(b []byte) error {
-	// Unmashal into a RawCmd
+	// Unmarshal into a RawCmd
 	var r RawCmd
 	if err := json.Unmarshal(b, &r); err != nil {
 		return err
@@ -1239,7 +1248,7 @@ func (cmd *EncryptWalletCmd) MarshalJSON() ([]byte, error) {
 // UnmarshalJSON unmarshals the JSON encoding of cmd into cmd.  Part of
 // the Cmd interface.
 func (cmd *EncryptWalletCmd) UnmarshalJSON(b []byte) error {
-	// Unmashal into a RawCmd
+	// Unmarshal into a RawCmd
 	var r RawCmd
 	if err := json.Unmarshal(b, &r); err != nil {
 		return err
@@ -1308,7 +1317,7 @@ func (cmd *EstimateFeeCmd) MarshalJSON() ([]byte, error) {
 // UnmarshalJSON unmarshals the JSON encoding of cmd into cmd.  Part of
 // the Cmd interface.
 func (cmd *EstimateFeeCmd) UnmarshalJSON(b []byte) error {
-	// Unmashal into a RawCmd
+	// Unmarshal into a RawCmd
 	var r RawCmd
 	if err := json.Unmarshal(b, &r); err != nil {
 		return err
@@ -1377,7 +1386,7 @@ func (cmd *EstimatePriorityCmd) MarshalJSON() ([]byte, error) {
 // UnmarshalJSON unmarshals the JSON encoding of cmd into cmd.  Part of
 // the Cmd interface.
 func (cmd *EstimatePriorityCmd) UnmarshalJSON(b []byte) error {
-	// Unmashal into a RawCmd
+	// Unmarshal into a RawCmd
 	var r RawCmd
 	if err := json.Unmarshal(b, &r); err != nil {
 		return err
@@ -1446,7 +1455,7 @@ func (cmd *GetAccountCmd) MarshalJSON() ([]byte, error) {
 // UnmarshalJSON unmarshals the JSON encoding of cmd into cmd.  Part of
 // the Cmd interface.
 func (cmd *GetAccountCmd) UnmarshalJSON(b []byte) error {
-	// Unmashal into a RawCmd
+	// Unmarshal into a RawCmd
 	var r RawCmd
 	if err := json.Unmarshal(b, &r); err != nil {
 		return err
@@ -1515,7 +1524,7 @@ func (cmd *GetAccountAddressCmd) MarshalJSON() ([]byte, error) {
 // UnmarshalJSON unmarshals the JSON encoding of cmd into cmd.  Part of
 // the Cmd interface.
 func (cmd *GetAccountAddressCmd) UnmarshalJSON(b []byte) error {
-	// Unmashal into a RawCmd
+	// Unmarshal into a RawCmd
 	var r RawCmd
 	if err := json.Unmarshal(b, &r); err != nil {
 		return err
@@ -1599,7 +1608,7 @@ func (cmd *GetAddedNodeInfoCmd) MarshalJSON() ([]byte, error) {
 // UnmarshalJSON unmarshals the JSON encoding of cmd into cmd.  Part of
 // the Cmd interface.
 func (cmd *GetAddedNodeInfoCmd) UnmarshalJSON(b []byte) error {
-	// Unmashal into a RawCmd
+	// Unmarshal into a RawCmd
 	var r RawCmd
 	if err := json.Unmarshal(b, &r); err != nil {
 		return err
@@ -1675,7 +1684,7 @@ func (cmd *GetAddressesByAccountCmd) MarshalJSON() ([]byte, error) {
 // UnmarshalJSON unmarshals the JSON encoding of cmd into cmd.  Part of
 // the Cmd interface.
 func (cmd *GetAddressesByAccountCmd) UnmarshalJSON(b []byte) error {
-	// Unmashal into a RawCmd
+	// Unmarshal into a RawCmd
 	var r RawCmd
 	if err := json.Unmarshal(b, &r); err != nil {
 		return err
@@ -1703,7 +1712,7 @@ func (cmd *GetAddressesByAccountCmd) UnmarshalJSON(b []byte) error {
 // unmarshaling of getbalance JSON RPC commands.
 type GetBalanceCmd struct {
 	id      interface{}
-	Account string
+	Account *string
 	MinConf int
 }
 
@@ -1713,7 +1722,7 @@ var _ Cmd = &GetBalanceCmd{}
 // NewGetBalanceCmd creates a new GetBalanceCmd. Optionally a string for account
 // and an int for minconf may be provided as arguments.
 func NewGetBalanceCmd(id interface{}, optArgs ...interface{}) (*GetBalanceCmd, error) {
-	var account string
+	var account *string
 	var minconf = 1
 
 	if len(optArgs) > 2 {
@@ -1724,7 +1733,7 @@ func NewGetBalanceCmd(id interface{}, optArgs ...interface{}) (*GetBalanceCmd, e
 		if !ok {
 			return nil, errors.New("first optional argument account is not a string")
 		}
-		account = a
+		account = &a
 	}
 
 	if len(optArgs) > 1 {
@@ -1755,7 +1764,7 @@ func (cmd *GetBalanceCmd) Method() string {
 // MarshalJSON returns the JSON encoding of cmd.  Part of the Cmd interface.
 func (cmd *GetBalanceCmd) MarshalJSON() ([]byte, error) {
 	params := make([]interface{}, 0, 2)
-	if cmd.Account != "" || cmd.MinConf != 1 {
+	if cmd.Account != nil {
 		params = append(params, cmd.Account)
 	}
 	if cmd.MinConf != 1 {
@@ -1773,7 +1782,7 @@ func (cmd *GetBalanceCmd) MarshalJSON() ([]byte, error) {
 // UnmarshalJSON unmarshals the JSON encoding of cmd into cmd.  Part of
 // the Cmd interface.
 func (cmd *GetBalanceCmd) UnmarshalJSON(b []byte) error {
-	// Unmashal into a RawCmd
+	// Unmarshal into a RawCmd
 	var r RawCmd
 	if err := json.Unmarshal(b, &r); err != nil {
 		return err
@@ -1848,7 +1857,7 @@ func (cmd *GetBestBlockHashCmd) MarshalJSON() ([]byte, error) {
 // UnmarshalJSON unmarshals the JSON encoding of cmd into cmd.  Part of
 // the Cmd interface.
 func (cmd *GetBestBlockHashCmd) UnmarshalJSON(b []byte) error {
-	// Unmashal into a RawCmd
+	// Unmarshal into a RawCmd
 	var r RawCmd
 	if err := json.Unmarshal(b, &r); err != nil {
 		return err
@@ -1942,7 +1951,7 @@ func (cmd *GetBlockCmd) MarshalJSON() ([]byte, error) {
 // UnmarshalJSON unmarshals the JSON encoding of cmd into cmd.  Part of
 // the Cmd interface.
 func (cmd *GetBlockCmd) UnmarshalJSON(b []byte) error {
-	// Unmashal into a RawCmd
+	// Unmarshal into a RawCmd
 	var r RawCmd
 	if err := json.Unmarshal(b, &r); err != nil {
 		return err
@@ -2021,7 +2030,7 @@ func (cmd *GetBlockChainInfoCmd) MarshalJSON() ([]byte, error) {
 // UnmarshalJSON unmarshals the JSON encoding of cmd into cmd.  Part of
 // the Cmd interface.
 func (cmd *GetBlockChainInfoCmd) UnmarshalJSON(b []byte) error {
-	// Unmashal into a RawCmd
+	// Unmarshal into a RawCmd
 	var r RawCmd
 	if err := json.Unmarshal(b, &r); err != nil {
 		return err
@@ -2079,7 +2088,7 @@ func (cmd *GetBlockCountCmd) MarshalJSON() ([]byte, error) {
 // UnmarshalJSON unmarshals the JSON encoding of cmd into cmd.  Part of
 // the Cmd interface.
 func (cmd *GetBlockCountCmd) UnmarshalJSON(b []byte) error {
-	// Unmashal into a RawCmd
+	// Unmarshal into a RawCmd
 	var r RawCmd
 	if err := json.Unmarshal(b, &r); err != nil {
 		return err
@@ -2143,7 +2152,7 @@ func (cmd *GetBlockHashCmd) MarshalJSON() ([]byte, error) {
 // UnmarshalJSON unmarshals the JSON encoding of cmd into cmd.  Part of
 // the Cmd interface.
 func (cmd *GetBlockHashCmd) UnmarshalJSON(b []byte) error {
-	// Unmashal into a RawCmd
+	// Unmarshal into a RawCmd
 	var r RawCmd
 	if err := json.Unmarshal(b, &r); err != nil {
 		return err
@@ -2284,7 +2293,7 @@ func (cmd *GetBlockTemplateCmd) MarshalJSON() ([]byte, error) {
 // UnmarshalJSON unmarshals the JSON encoding of cmd into cmd.  Part of
 // the Cmd interface.
 func (cmd *GetBlockTemplateCmd) UnmarshalJSON(b []byte) error {
-	// Unmashal into a RawCmd
+	// Unmarshal into a RawCmd
 	var r RawCmd
 	if err := json.Unmarshal(b, &r); err != nil {
 		return err
@@ -2351,7 +2360,7 @@ func (cmd *GetConnectionCountCmd) MarshalJSON() ([]byte, error) {
 // UnmarshalJSON unmarshals the JSON encoding of cmd into cmd.  Part of
 // the Cmd interface.
 func (cmd *GetConnectionCountCmd) UnmarshalJSON(b []byte) error {
-	// Unmashal into a RawCmd
+	// Unmarshal into a RawCmd
 	var r RawCmd
 	if err := json.Unmarshal(b, &r); err != nil {
 		return err
@@ -2409,7 +2418,7 @@ func (cmd *GetDifficultyCmd) MarshalJSON() ([]byte, error) {
 // UnmarshalJSON unmarshals the JSON encoding of cmd into cmd.  Part of
 // the Cmd interface.
 func (cmd *GetDifficultyCmd) UnmarshalJSON(b []byte) error {
-	// Unmashal into a RawCmd
+	// Unmarshal into a RawCmd
 	var r RawCmd
 	if err := json.Unmarshal(b, &r); err != nil {
 		return err
@@ -2467,7 +2476,7 @@ func (cmd *GetGenerateCmd) MarshalJSON() ([]byte, error) {
 // UnmarshalJSON unmarshals the JSON encoding of cmd into cmd.  Part of
 // the Cmd interface.
 func (cmd *GetGenerateCmd) UnmarshalJSON(b []byte) error {
-	// Unmashal into a RawCmd
+	// Unmarshal into a RawCmd
 	var r RawCmd
 	if err := json.Unmarshal(b, &r); err != nil {
 		return err
@@ -2525,7 +2534,7 @@ func (cmd *GetHashesPerSecCmd) MarshalJSON() ([]byte, error) {
 // UnmarshalJSON unmarshals the JSON encoding of cmd into cmd.  Part of
 // the Cmd interface.
 func (cmd *GetHashesPerSecCmd) UnmarshalJSON(b []byte) error {
-	// Unmashal into a RawCmd
+	// Unmarshal into a RawCmd
 	var r RawCmd
 	if err := json.Unmarshal(b, &r); err != nil {
 		return err
@@ -2583,7 +2592,7 @@ func (cmd *GetInfoCmd) MarshalJSON() ([]byte, error) {
 // UnmarshalJSON unmarshals the JSON encoding of cmd into cmd.  Part of
 // the Cmd interface.
 func (cmd *GetInfoCmd) UnmarshalJSON(b []byte) error {
-	// Unmashal into a RawCmd
+	// Unmarshal into a RawCmd
 	var r RawCmd
 	if err := json.Unmarshal(b, &r); err != nil {
 		return err
@@ -2641,7 +2650,7 @@ func (cmd *GetMiningInfoCmd) MarshalJSON() ([]byte, error) {
 // UnmarshalJSON unmarshals the JSON encoding of cmd into cmd.  Part of
 // the Cmd interface.
 func (cmd *GetMiningInfoCmd) UnmarshalJSON(b []byte) error {
-	// Unmashal into a RawCmd
+	// Unmarshal into a RawCmd
 	var r RawCmd
 	if err := json.Unmarshal(b, &r); err != nil {
 		return err
@@ -2699,7 +2708,7 @@ func (cmd *GetNetworkInfoCmd) MarshalJSON() ([]byte, error) {
 // UnmarshalJSON unmarshals the JSON encoding of cmd into cmd.  Part of
 // the Cmd interface.
 func (cmd *GetNetworkInfoCmd) UnmarshalJSON(b []byte) error {
-	// Unmashal into a RawCmd
+	// Unmarshal into a RawCmd
 	var r RawCmd
 	if err := json.Unmarshal(b, &r); err != nil {
 		return err
@@ -2757,7 +2766,7 @@ func (cmd *GetNetTotalsCmd) MarshalJSON() ([]byte, error) {
 // UnmarshalJSON unmarshals the JSON encoding of cmd into cmd.  Part of
 // the Cmd interface.
 func (cmd *GetNetTotalsCmd) UnmarshalJSON(b []byte) error {
-	// Unmashal into a RawCmd
+	// Unmarshal into a RawCmd
 	var r RawCmd
 	if err := json.Unmarshal(b, &r); err != nil {
 		return err
@@ -2841,7 +2850,7 @@ func (cmd *GetNetworkHashPSCmd) MarshalJSON() ([]byte, error) {
 // UnmarshalJSON unmarshals the JSON encoding of cmd into cmd.  Part of
 // the Cmd interface.
 func (cmd *GetNetworkHashPSCmd) UnmarshalJSON(b []byte) error {
-	// Unmashal into a RawCmd
+	// Unmarshal into a RawCmd
 	var r RawCmd
 	if err := json.Unmarshal(b, &r); err != nil {
 		return err
@@ -2930,7 +2939,7 @@ func (cmd *GetNewAddressCmd) MarshalJSON() ([]byte, error) {
 // UnmarshalJSON unmarshals the JSON encoding of cmd into cmd.  Part of
 // the Cmd interface.
 func (cmd *GetNewAddressCmd) UnmarshalJSON(b []byte) error {
-	// Unmashal into a RawCmd
+	// Unmarshal into a RawCmd
 	var r RawCmd
 	if err := json.Unmarshal(b, &r); err != nil {
 		return err
@@ -2997,7 +3006,7 @@ func (cmd *GetPeerInfoCmd) MarshalJSON() ([]byte, error) {
 // UnmarshalJSON unmarshals the JSON encoding of cmd into cmd.  Part of
 // the Cmd interface.
 func (cmd *GetPeerInfoCmd) UnmarshalJSON(b []byte) error {
-	// Unmashal into a RawCmd
+	// Unmarshal into a RawCmd
 	var r RawCmd
 	if err := json.Unmarshal(b, &r); err != nil {
 		return err
@@ -3070,7 +3079,7 @@ func (cmd *GetRawChangeAddressCmd) MarshalJSON() ([]byte, error) {
 // UnmarshalJSON unmarshals the JSON encoding of cmd into cmd.  Part of
 // the Cmd interface.
 func (cmd *GetRawChangeAddressCmd) UnmarshalJSON(b []byte) error {
-	// Unmashal into a RawCmd
+	// Unmarshal into a RawCmd
 	var r RawCmd
 	if err := json.Unmarshal(b, &r); err != nil {
 		return err
@@ -3151,7 +3160,7 @@ func (cmd *GetRawMempoolCmd) MarshalJSON() ([]byte, error) {
 // UnmarshalJSON unmarshals the JSON encoding of cmd into cmd.  Part of
 // the Cmd interface.
 func (cmd *GetRawMempoolCmd) UnmarshalJSON(b []byte) error {
-	// Unmashal into a RawCmd
+	// Unmarshal into a RawCmd
 	var r RawCmd
 	if err := json.Unmarshal(b, &r); err != nil {
 		return err
@@ -3236,7 +3245,7 @@ func (cmd *GetRawTransactionCmd) MarshalJSON() ([]byte, error) {
 // UnmarshalJSON unmarshals the JSON encoding of cmd into cmd.  Part of
 // the Cmd interface.
 func (cmd *GetRawTransactionCmd) UnmarshalJSON(b []byte) error {
-	// Unmashal into a RawCmd
+	// Unmarshal into a RawCmd
 	var r RawCmd
 	if err := json.Unmarshal(b, &r); err != nil {
 		return err
@@ -3325,7 +3334,7 @@ func (cmd *GetReceivedByAccountCmd) MarshalJSON() ([]byte, error) {
 // UnmarshalJSON unmarshals the JSON encoding of cmd into cmd.  Part of
 // the Cmd interface.
 func (cmd *GetReceivedByAccountCmd) UnmarshalJSON(b []byte) error {
-	// Unmashal into a RawCmd
+	// Unmarshal into a RawCmd
 	var r RawCmd
 	if err := json.Unmarshal(b, &r); err != nil {
 		return err
@@ -3414,7 +3423,7 @@ func (cmd *GetReceivedByAddressCmd) MarshalJSON() ([]byte, error) {
 // UnmarshalJSON unmarshals the JSON encoding of cmd into cmd.  Part of
 // the Cmd interface.
 func (cmd *GetReceivedByAddressCmd) UnmarshalJSON(b []byte) error {
-	// Unmashal into a RawCmd
+	// Unmarshal into a RawCmd
 	var r RawCmd
 	if err := json.Unmarshal(b, &r); err != nil {
 		return err
@@ -3492,7 +3501,7 @@ func (cmd *GetTransactionCmd) MarshalJSON() ([]byte, error) {
 // UnmarshalJSON unmarshals the JSON encoding of cmd into cmd.  Part of
 // the Cmd interface.
 func (cmd *GetTransactionCmd) UnmarshalJSON(b []byte) error {
-	// Unmashal into a RawCmd
+	// Unmarshal into a RawCmd
 	var r RawCmd
 	if err := json.Unmarshal(b, &r); err != nil {
 		return err
@@ -3575,7 +3584,7 @@ func (cmd *GetTxOutCmd) MarshalJSON() ([]byte, error) {
 // UnmarshalJSON unmarshals the JSON encoding of cmd into cmd.  Part of
 // the Cmd interface.
 func (cmd *GetTxOutCmd) UnmarshalJSON(b []byte) error {
-	// Unmashal into a RawCmd
+	// Unmarshal into a RawCmd
 	var r RawCmd
 	if err := json.Unmarshal(b, &r); err != nil {
 		return err
@@ -3652,7 +3661,7 @@ func (cmd *GetTxOutSetInfoCmd) MarshalJSON() ([]byte, error) {
 // UnmarshalJSON unmarshals the JSON encoding of cmd into cmd.  Part of
 // the Cmd interface.
 func (cmd *GetTxOutSetInfoCmd) UnmarshalJSON(b []byte) error {
-	// Unmashal into a RawCmd
+	// Unmarshal into a RawCmd
 	var r RawCmd
 	if err := json.Unmarshal(b, &r); err != nil {
 		return err
@@ -3725,7 +3734,7 @@ func (cmd *GetWorkCmd) MarshalJSON() ([]byte, error) {
 // UnmarshalJSON unmarshals the JSON encoding of cmd into cmd.  Part of
 // the Cmd interface.
 func (cmd *GetWorkCmd) UnmarshalJSON(b []byte) error {
-	// Unmashal into a RawCmd
+	// Unmarshal into a RawCmd
 	var r RawCmd
 	if err := json.Unmarshal(b, &r); err != nil {
 		return err
@@ -3805,7 +3814,7 @@ func (cmd *HelpCmd) MarshalJSON() ([]byte, error) {
 // UnmarshalJSON unmarshals the JSON encoding of cmd into cmd.  Part of
 // the Cmd interface.
 func (cmd *HelpCmd) UnmarshalJSON(b []byte) error {
-	// Unmashal into a RawCmd
+	// Unmarshal into a RawCmd
 	var r RawCmd
 	if err := json.Unmarshal(b, &r); err != nil {
 		return err
@@ -3907,7 +3916,7 @@ func (cmd *ImportPrivKeyCmd) MarshalJSON() ([]byte, error) {
 // UnmarshalJSON unmarshals the JSON encoding of cmd into cmd.  Part of
 // the Cmd interface.
 func (cmd *ImportPrivKeyCmd) UnmarshalJSON(b []byte) error {
-	// Unmashal into a RawCmd
+	// Unmarshal into a RawCmd
 	var r RawCmd
 	if err := json.Unmarshal(b, &r); err != nil {
 		return err
@@ -3994,7 +4003,7 @@ func (cmd *ImportWalletCmd) MarshalJSON() ([]byte, error) {
 // UnmarshalJSON unmarshals the JSON encoding of cmd into cmd.  Part of
 // the Cmd interface.
 func (cmd *ImportWalletCmd) UnmarshalJSON(b []byte) error {
-	// Unmashal into a RawCmd
+	// Unmarshal into a RawCmd
 	var r RawCmd
 	if err := json.Unmarshal(b, &r); err != nil {
 		return err
@@ -4010,6 +4019,76 @@ func (cmd *ImportWalletCmd) UnmarshalJSON(b []byte) error {
 	}
 
 	newCmd, err := NewImportWalletCmd(r.Id, filename)
+	if err != nil {
+		return err
+	}
+
+	*cmd = *newCmd
+	return nil
+}
+
+// InvalidateBlockCmd is a type handling custom marshaling and
+// unmarshaling of invalidateblock JSON RPC commands.
+type InvalidateBlockCmd struct {
+	id        interface{}
+	BlockHash string
+}
+
+// Enforce that InvalidateBlockCmd satisifies the Cmd interface.
+var _ Cmd = &InvalidateBlockCmd{}
+
+// NewInvalidateBlockCmd creates a new InvalidateBlockCmd. Optionally a
+// pointer to a TemplateRequest may be provided.
+func NewInvalidateBlockCmd(id interface{}, blockhash string) (*InvalidateBlockCmd, error) {
+	return &InvalidateBlockCmd{
+		id:        id,
+		BlockHash: blockhash,
+	}, nil
+}
+
+// Id satisfies the Cmd interface by returning the id of the command.
+func (cmd *InvalidateBlockCmd) Id() interface{} {
+	return cmd.id
+}
+
+// Method satisfies the Cmd interface by returning the json method.
+func (cmd *InvalidateBlockCmd) Method() string {
+	return "invalidateblock"
+}
+
+// MarshalJSON returns the JSON encoding of cmd.  Part of the Cmd interface.
+func (cmd *InvalidateBlockCmd) MarshalJSON() ([]byte, error) {
+	params := []interface{}{
+		cmd.BlockHash,
+	}
+
+	// Fill and marshal a RawCmd.
+	raw, err := NewRawCmd(cmd.id, cmd.Method(), params)
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(raw)
+}
+
+// UnmarshalJSON unmarshals the JSON encoding of cmd into cmd.  Part of
+// the Cmd interface.
+func (cmd *InvalidateBlockCmd) UnmarshalJSON(b []byte) error {
+	// Unmarshal into a RawCmd
+	var r RawCmd
+	if err := json.Unmarshal(b, &r); err != nil {
+		return err
+	}
+
+	if len(r.Params) != 1 {
+		return ErrWrongNumberOfParams
+	}
+
+	var blockhash string
+	if err := json.Unmarshal(r.Params[0], &blockhash); err != nil {
+		return fmt.Errorf("first parameter 'hash' must be a string: %v", err)
+	}
+
+	newCmd, err := NewInvalidateBlockCmd(r.Id, blockhash)
 	if err != nil {
 		return err
 	}
@@ -4074,7 +4153,7 @@ func (cmd *KeyPoolRefillCmd) MarshalJSON() ([]byte, error) {
 // UnmarshalJSON unmarshals the JSON encoding of cmd into cmd.  Part of
 // the Cmd interface.
 func (cmd *KeyPoolRefillCmd) UnmarshalJSON(b []byte) error {
-	// Unmashal into a RawCmd
+	// Unmarshal into a RawCmd
 	var r RawCmd
 	if err := json.Unmarshal(b, &r); err != nil {
 		return err
@@ -4156,7 +4235,7 @@ func (cmd *ListAccountsCmd) MarshalJSON() ([]byte, error) {
 // UnmarshalJSON unmarshals the JSON encoding of cmd into cmd.  Part of
 // the Cmd interface.
 func (cmd *ListAccountsCmd) UnmarshalJSON(b []byte) error {
-	// Unmashal into a RawCmd
+	// Unmarshal into a RawCmd
 	var r RawCmd
 	if err := json.Unmarshal(b, &r); err != nil {
 		return err
@@ -4224,7 +4303,7 @@ func (cmd *ListAddressGroupingsCmd) MarshalJSON() ([]byte, error) {
 // UnmarshalJSON unmarshals the JSON encoding of cmd into cmd.  Part of
 // the Cmd interface.
 func (cmd *ListAddressGroupingsCmd) UnmarshalJSON(b []byte) error {
-	// Unmashal into a RawCmd
+	// Unmarshal into a RawCmd
 	var r RawCmd
 	if err := json.Unmarshal(b, &r); err != nil {
 		return err
@@ -4283,7 +4362,7 @@ func (cmd *ListLockUnspentCmd) MarshalJSON() ([]byte, error) {
 // UnmarshalJSON unmarshals the JSON encoding of cmd into cmd.  Part of
 // the Cmd interface.
 func (cmd *ListLockUnspentCmd) UnmarshalJSON(b []byte) error {
-	// Unmashal into a RawCmd
+	// Unmarshal into a RawCmd
 	var r RawCmd
 	if err := json.Unmarshal(b, &r); err != nil {
 		return err
@@ -4375,7 +4454,7 @@ func (cmd *ListReceivedByAccountCmd) MarshalJSON() ([]byte, error) {
 // UnmarshalJSON unmarshals the JSON encoding of cmd into cmd.  Part of
 // the Cmd interface.
 func (cmd *ListReceivedByAccountCmd) UnmarshalJSON(b []byte) error {
-	// Unmashal into a RawCmd
+	// Unmarshal into a RawCmd
 	var r RawCmd
 	if err := json.Unmarshal(b, &r); err != nil {
 		return err
@@ -4483,7 +4562,7 @@ func (cmd *ListReceivedByAddressCmd) MarshalJSON() ([]byte, error) {
 // UnmarshalJSON unmarshals the JSON encoding of cmd into cmd.  Part of
 // the Cmd interface.
 func (cmd *ListReceivedByAddressCmd) UnmarshalJSON(b []byte) error {
-	// Unmashal into a RawCmd
+	// Unmarshal into a RawCmd
 	var r RawCmd
 	if err := json.Unmarshal(b, &r); err != nil {
 		return err
@@ -4591,7 +4670,7 @@ func (cmd *ListSinceBlockCmd) MarshalJSON() ([]byte, error) {
 // UnmarshalJSON unmarshals the JSON encoding of cmd into cmd.  Part of
 // the Cmd interface.
 func (cmd *ListSinceBlockCmd) UnmarshalJSON(b []byte) error {
-	// Unmashal into a RawCmd
+	// Unmarshal into a RawCmd
 	var r RawCmd
 	if err := json.Unmarshal(b, &r); err != nil {
 		return err
@@ -4630,7 +4709,7 @@ func (cmd *ListSinceBlockCmd) UnmarshalJSON(b []byte) error {
 // unmarshaling of listtransactions JSON RPC commands.
 type ListTransactionsCmd struct {
 	id      interface{}
-	Account string
+	Account *string
 	Count   int
 	From    int
 }
@@ -4641,7 +4720,7 @@ var _ Cmd = &ListTransactionsCmd{}
 // NewListTransactionsCmd creates a new ListTransactionsCmd. Optionally a
 // pointer to a TemplateRequest may be provided.
 func NewListTransactionsCmd(id interface{}, optArgs ...interface{}) (*ListTransactionsCmd, error) {
-	account := ""
+	var account *string
 	count := 10
 	from := 0
 
@@ -4653,7 +4732,7 @@ func NewListTransactionsCmd(id interface{}, optArgs ...interface{}) (*ListTransa
 		if !ok {
 			return nil, errors.New("first optional argument account is not a string")
 		}
-		account = ac
+		account = &ac
 	}
 	if len(optArgs) > 1 {
 		cnt, ok := optArgs[1].(int)
@@ -4692,7 +4771,7 @@ func (cmd *ListTransactionsCmd) Method() string {
 // MarshalJSON returns the JSON encoding of cmd.  Part of the Cmd interface.
 func (cmd *ListTransactionsCmd) MarshalJSON() ([]byte, error) {
 	params := make([]interface{}, 0, 3)
-	if cmd.Account != "" || cmd.Count != 10 || cmd.From != 0 {
+	if cmd.Account != nil {
 		params = append(params, cmd.Account)
 	}
 	if cmd.Count != 10 || cmd.From != 0 {
@@ -4713,7 +4792,7 @@ func (cmd *ListTransactionsCmd) MarshalJSON() ([]byte, error) {
 // UnmarshalJSON unmarshals the JSON encoding of cmd into cmd.  Part of
 // the Cmd interface.
 func (cmd *ListTransactionsCmd) UnmarshalJSON(b []byte) error {
-	// Unmashal into a RawCmd
+	// Unmarshal into a RawCmd
 	var r RawCmd
 	if err := json.Unmarshal(b, &r); err != nil {
 		return err
@@ -4840,7 +4919,7 @@ func (cmd *ListUnspentCmd) MarshalJSON() ([]byte, error) {
 // UnmarshalJSON unmarshals the JSON encoding of cmd into cmd.  Part of
 // the Cmd interface.
 func (cmd *ListUnspentCmd) UnmarshalJSON(b []byte) error {
-	// Unmashal into a RawCmd
+	// Unmarshal into a RawCmd
 	var r RawCmd
 	if err := json.Unmarshal(b, &r); err != nil {
 		return err
@@ -4942,7 +5021,7 @@ func (cmd *LockUnspentCmd) MarshalJSON() ([]byte, error) {
 // UnmarshalJSON unmarshals the JSON encoding of cmd into cmd.  Part of
 // the Cmd interface.
 func (cmd *LockUnspentCmd) UnmarshalJSON(b []byte) error {
-	// Unmashal into a RawCmd
+	// Unmarshal into a RawCmd
 	var r RawCmd
 	if err := json.Unmarshal(b, &r); err != nil {
 		return err
@@ -5059,7 +5138,7 @@ func (cmd *MoveCmd) MarshalJSON() ([]byte, error) {
 // UnmarshalJSON unmarshals the JSON encoding of cmd into cmd.  Part of
 // the Cmd interface.
 func (cmd *MoveCmd) UnmarshalJSON(b []byte) error {
-	// Unmashal into a RawCmd
+	// Unmarshal into a RawCmd
 	var r RawCmd
 	if err := json.Unmarshal(b, &r); err != nil {
 		return err
@@ -5154,7 +5233,7 @@ func (cmd *PingCmd) MarshalJSON() ([]byte, error) {
 // UnmarshalJSON unmarshals the JSON encoding of cmd into cmd.  Part of
 // the Cmd interface.
 func (cmd *PingCmd) UnmarshalJSON(b []byte) error {
-	// Unmashal into a RawCmd
+	// Unmarshal into a RawCmd
 	var r RawCmd
 	if err := json.Unmarshal(b, &r); err != nil {
 		return err
@@ -5172,6 +5251,216 @@ func (cmd *PingCmd) UnmarshalJSON(b []byte) error {
 	*cmd = *newCmd
 	return nil
 }
+
+// ReconsiderBlockCmd is a type handling custom marshaling and
+// unmarshaling of reconsiderblock JSON RPC commands.
+type ReconsiderBlockCmd struct {
+	id        interface{}
+	BlockHash string
+}
+
+// Enforce that ReconsiderBlockCmd satisifies the Cmd interface.
+var _ Cmd = &ReconsiderBlockCmd{}
+
+// NewReconsiderBlockCmd creates a new ReconsiderBlockCmd. Optionally a
+// pointer to a TemplateRequest may be provided.
+func NewReconsiderBlockCmd(id interface{}, blockhash string) (*ReconsiderBlockCmd, error) {
+	return &ReconsiderBlockCmd{
+		id:        id,
+		BlockHash: blockhash,
+	}, nil
+}
+
+// Id satisfies the Cmd interface by returning the id of the command.
+func (cmd *ReconsiderBlockCmd) Id() interface{} {
+	return cmd.id
+}
+
+// Method satisfies the Cmd interface by returning the json method.
+func (cmd *ReconsiderBlockCmd) Method() string {
+	return "reconsiderblock"
+}
+
+// MarshalJSON returns the JSON encoding of cmd.  Part of the Cmd interface.
+func (cmd *ReconsiderBlockCmd) MarshalJSON() ([]byte, error) {
+	params := []interface{}{
+		cmd.BlockHash,
+	}
+
+	// Fill and marshal a RawCmd.
+	raw, err := NewRawCmd(cmd.id, cmd.Method(), params)
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(raw)
+}
+
+// UnmarshalJSON unmarshals the JSON encoding of cmd into cmd.  Part of
+// the Cmd interface.
+func (cmd *ReconsiderBlockCmd) UnmarshalJSON(b []byte) error {
+	// Unmarshal into a RawCmd
+	var r RawCmd
+	if err := json.Unmarshal(b, &r); err != nil {
+		return err
+	}
+
+	if len(r.Params) != 1 {
+		return ErrWrongNumberOfParams
+	}
+
+	var blockhash string
+	if err := json.Unmarshal(r.Params[0], &blockhash); err != nil {
+		return fmt.Errorf("first parameter 'hash' must be a string: %v", err)
+	}
+
+	newCmd, err := NewReconsiderBlockCmd(r.Id, blockhash)
+	if err != nil {
+		return err
+	}
+
+	*cmd = *newCmd
+	return nil
+}
+
+// SearchRawTransactionCmd is a type handling custom marshaling and
+// unmarshaling of sendrawtransaction JSON RPC commands.
+type SearchRawTransactionCmd struct {
+	id      interface{}
+	Address string
+	Verbose bool
+	Skip    int
+	Count   int
+}
+
+// NewSearchRawTransactionCmd creates a new SearchRawTransactionCmd.
+func NewSearchRawTransactionCmd(id interface{}, address string,
+	optArgs ...interface{}) (*SearchRawTransactionCmd, error) {
+	verbose := true
+	var skip int
+	count := 100
+
+	if len(optArgs) > 3 {
+		return nil, ErrTooManyOptArgs
+	}
+
+	if len(optArgs) > 0 {
+		v, ok := optArgs[0].(bool)
+		if !ok {
+			return nil, errors.New("first optional argument verbose is not a bool")
+		}
+
+		verbose = v
+	}
+	if len(optArgs) > 1 {
+		s, ok := optArgs[1].(int)
+		if !ok {
+			return nil, errors.New("second optional argument skip is not an int")
+		}
+		skip = s
+	}
+	if len(optArgs) > 2 {
+		c, ok := optArgs[2].(int)
+		if !ok {
+			return nil, errors.New("third optional argument count is not an int")
+		}
+
+		count = c
+	}
+
+	return &SearchRawTransactionCmd{
+		id:      id,
+		Address: address,
+		Verbose: verbose,
+		Skip:    skip,
+		Count:   count,
+	}, nil
+}
+
+// Id satisfies the Cmd interface by returning the id of the command.
+func (cmd *SearchRawTransactionCmd) Id() interface{} {
+	return cmd.id
+}
+
+// Method satisfies the Cmd interface by returning the json method.
+func (cmd *SearchRawTransactionCmd) Method() string {
+	return "searchrawtransaction"
+}
+
+// MarshalJSON returns the JSON encoding of cmd.  Part of the Cmd interface.
+func (cmd *SearchRawTransactionCmd) MarshalJSON() ([]byte, error) {
+	params := make([]interface{}, 1, 4)
+	params[0] = cmd.Address
+	if !cmd.Verbose || cmd.Skip != 0 || cmd.Count != 100 {
+		params = append(params, cmd.Verbose)
+	}
+	if cmd.Skip != 0 || cmd.Count != 100 {
+		params = append(params, cmd.Skip)
+	}
+	if cmd.Count != 100 {
+		params = append(params, cmd.Count)
+	}
+
+	// Fill and marshal a RawCmd.
+	raw, err := NewRawCmd(cmd.id, cmd.Method(), params)
+	if err != nil {
+		return nil, err
+
+	}
+	return json.Marshal(raw)
+}
+
+// UnmarshalJSON unmarshals the JSON encoding of cmd into cmd.  Part of
+// the Cmd interface.
+func (cmd *SearchRawTransactionCmd) UnmarshalJSON(b []byte) error {
+	// Unmarshal into a RawCmd
+	var r RawCmd
+	if err := json.Unmarshal(b, &r); err != nil {
+		return err
+	}
+
+	if len(r.Params) == 0 || len(r.Params) > 4 {
+		return ErrWrongNumberOfParams
+	}
+
+	var address string
+	if err := json.Unmarshal(r.Params[0], &address); err != nil {
+		return fmt.Errorf("first parameter 'address' must be a string: %v", err)
+	}
+
+	optArgs := make([]interface{}, 0, 3)
+	if len(r.Params) > 1 {
+		var verbose bool
+		if err := json.Unmarshal(r.Params[1], &verbose); err != nil {
+			return fmt.Errorf("second optional parameter 'verbose' must be an bool: %v", err)
+		}
+		optArgs = append(optArgs, verbose)
+	}
+	if len(r.Params) > 2 {
+		var skip int
+		if err := json.Unmarshal(r.Params[2], &skip); err != nil {
+			return fmt.Errorf("third optional parameter 'skip' must be an int: %v", err)
+		}
+		optArgs = append(optArgs, skip)
+	}
+	if len(r.Params) > 3 {
+		var count int
+		if err := json.Unmarshal(r.Params[3], &count); err != nil {
+			return fmt.Errorf("fourth optional parameter 'count' must be an int: %v", err)
+		}
+		optArgs = append(optArgs, count)
+	}
+
+	newCmd, err := NewSearchRawTransactionCmd(r.Id, address, optArgs...)
+	if err != nil {
+		return err
+	}
+
+	*cmd = *newCmd
+	return nil
+}
+
+// Enforce that SearchRawTransactionCmd satisifies the Cmd interface.
+var _ Cmd = &SearchRawTransactionCmd{}
 
 // SendFromCmd is a type handling custom marshaling and
 // unmarshaling of sendfrom JSON RPC commands.
@@ -5270,7 +5559,7 @@ func (cmd *SendFromCmd) MarshalJSON() ([]byte, error) {
 // UnmarshalJSON unmarshals the JSON encoding of cmd into cmd.  Part of
 // the Cmd interface.
 func (cmd *SendFromCmd) UnmarshalJSON(b []byte) error {
-	// Unmashal into a RawCmd
+	// Unmarshal into a RawCmd
 	var r RawCmd
 	if err := json.Unmarshal(b, &r); err != nil {
 		return err
@@ -5417,7 +5706,7 @@ func (cmd *SendManyCmd) MarshalJSON() ([]byte, error) {
 // UnmarshalJSON unmarshals the JSON encoding of cmd into cmd.  Part of
 // the Cmd interface.
 func (cmd *SendManyCmd) UnmarshalJSON(b []byte) error {
-	// Unmashal into a RawCmd
+	// Unmarshal into a RawCmd
 	var r RawCmd
 	if err := json.Unmarshal(b, &r); err != nil {
 		return err
@@ -5528,7 +5817,7 @@ func (cmd *SendRawTransactionCmd) MarshalJSON() ([]byte, error) {
 // UnmarshalJSON unmarshals the JSON encoding of cmd into cmd.  Part of
 // the Cmd interface.
 func (cmd *SendRawTransactionCmd) UnmarshalJSON(b []byte) error {
-	// Unmashal into a RawCmd
+	// Unmarshal into a RawCmd
 	var r RawCmd
 	if err := json.Unmarshal(b, &r); err != nil {
 		return err
@@ -5641,7 +5930,7 @@ func (cmd *SendToAddressCmd) MarshalJSON() ([]byte, error) {
 // UnmarshalJSON unmarshals the JSON encoding of cmd into cmd.  Part of
 // the Cmd interface.
 func (cmd *SendToAddressCmd) UnmarshalJSON(b []byte) error {
-	// Unmashal into a RawCmd
+	// Unmarshal into a RawCmd
 	var r RawCmd
 	if err := json.Unmarshal(b, &r); err != nil {
 		return err
@@ -5740,7 +6029,7 @@ func (cmd *SetAccountCmd) MarshalJSON() ([]byte, error) {
 // UnmarshalJSON unmarshals the JSON encoding of cmd into cmd.  Part of
 // the Cmd interface.
 func (cmd *SetAccountCmd) UnmarshalJSON(b []byte) error {
-	// Unmashal into a RawCmd
+	// Unmarshal into a RawCmd
 	var r RawCmd
 	if err := json.Unmarshal(b, &r); err != nil {
 		return err
@@ -5827,7 +6116,7 @@ func (cmd *SetGenerateCmd) MarshalJSON() ([]byte, error) {
 // UnmarshalJSON unmarshals the JSON encoding of cmd into cmd.  Part of
 // the Cmd interface.
 func (cmd *SetGenerateCmd) UnmarshalJSON(b []byte) error {
-	// Unmashal into a RawCmd
+	// Unmarshal into a RawCmd
 	var r RawCmd
 	if err := json.Unmarshal(b, &r); err != nil {
 		return err
@@ -5906,7 +6195,7 @@ func (cmd *SetTxFeeCmd) MarshalJSON() ([]byte, error) {
 // UnmarshalJSON unmarshals the JSON encoding of cmd into cmd.  Part of
 // the Cmd interface.
 func (cmd *SetTxFeeCmd) UnmarshalJSON(b []byte) error {
-	// Unmashal into a RawCmd
+	// Unmarshal into a RawCmd
 	var r RawCmd
 	if err := json.Unmarshal(b, &r); err != nil {
 		return err
@@ -5983,7 +6272,7 @@ func (cmd *SignMessageCmd) MarshalJSON() ([]byte, error) {
 // UnmarshalJSON unmarshals the JSON encoding of cmd into cmd.  Part of
 // the Cmd interface.
 func (cmd *SignMessageCmd) UnmarshalJSON(b []byte) error {
-	// Unmashal into a RawCmd
+	// Unmarshal into a RawCmd
 	var r RawCmd
 	if err := json.Unmarshal(b, &r); err != nil {
 		return err
@@ -6110,7 +6399,7 @@ func (cmd *SignRawTransactionCmd) MarshalJSON() ([]byte, error) {
 // UnmarshalJSON unmarshals the JSON encoding of cmd into cmd.  Part of
 // the Cmd interface.
 func (cmd *SignRawTransactionCmd) UnmarshalJSON(b []byte) error {
-	// Unmashal into a RawCmd
+	// Unmarshal into a RawCmd
 	var r RawCmd
 	if err := json.Unmarshal(b, &r); err != nil {
 		return err
@@ -6200,7 +6489,7 @@ func (cmd *StopCmd) MarshalJSON() ([]byte, error) {
 // UnmarshalJSON unmarshals the JSON encoding of cmd into cmd.  Part of
 // the Cmd interface.
 func (cmd *StopCmd) UnmarshalJSON(b []byte) error {
-	// Unmashal into a RawCmd
+	// Unmarshal into a RawCmd
 	var r RawCmd
 	if err := json.Unmarshal(b, &r); err != nil {
 		return err
@@ -6284,7 +6573,7 @@ func (cmd *SubmitBlockCmd) MarshalJSON() ([]byte, error) {
 // UnmarshalJSON unmarshals the JSON encoding of cmd into cmd.  Part of
 // the Cmd interface.
 func (cmd *SubmitBlockCmd) UnmarshalJSON(b []byte) error {
-	// Unmashal into a RawCmd
+	// Unmarshal into a RawCmd
 	var r RawCmd
 	if err := json.Unmarshal(b, &r); err != nil {
 		return err
@@ -6365,7 +6654,7 @@ func (cmd *ValidateAddressCmd) MarshalJSON() ([]byte, error) {
 // UnmarshalJSON unmarshals the JSON encoding of cmd into cmd.  Part of
 // the Cmd interface.
 func (cmd *ValidateAddressCmd) UnmarshalJSON(b []byte) error {
-	// Unmashal into a RawCmd
+	// Unmarshal into a RawCmd
 	var r RawCmd
 	if err := json.Unmarshal(b, &r); err != nil {
 		return err
@@ -6457,7 +6746,7 @@ func (cmd *VerifyChainCmd) MarshalJSON() ([]byte, error) {
 // UnmarshalJSON unmarshals the JSON encoding of cmd into cmd.  Part of
 // the Cmd interface.
 func (cmd *VerifyChainCmd) UnmarshalJSON(b []byte) error {
-	// Unmashal into a RawCmd
+	// Unmarshal into a RawCmd
 	var r RawCmd
 	if err := json.Unmarshal(b, &r); err != nil {
 		return err
@@ -6547,7 +6836,7 @@ func (cmd *VerifyMessageCmd) MarshalJSON() ([]byte, error) {
 // UnmarshalJSON unmarshals the JSON encoding of cmd into cmd.  Part of
 // the Cmd interface.
 func (cmd *VerifyMessageCmd) UnmarshalJSON(b []byte) error {
-	// Unmashal into a RawCmd
+	// Unmarshal into a RawCmd
 	var r RawCmd
 	if err := json.Unmarshal(b, &r); err != nil {
 		return err
@@ -6622,7 +6911,7 @@ func (cmd *WalletLockCmd) MarshalJSON() ([]byte, error) {
 // UnmarshalJSON unmarshals the JSON encoding of cmd into cmd.  Part of
 // the Cmd interface.
 func (cmd *WalletLockCmd) UnmarshalJSON(b []byte) error {
-	// Unmashal into a RawCmd
+	// Unmarshal into a RawCmd
 	var r RawCmd
 	if err := json.Unmarshal(b, &r); err != nil {
 		return err
@@ -6691,7 +6980,7 @@ func (cmd *WalletPassphraseCmd) MarshalJSON() ([]byte, error) {
 // UnmarshalJSON unmarshals the JSON encoding of cmd into cmd.  Part of
 // the Cmd interface.
 func (cmd *WalletPassphraseCmd) UnmarshalJSON(b []byte) error {
-	// Unmashal into a RawCmd
+	// Unmarshal into a RawCmd
 	var r RawCmd
 	if err := json.Unmarshal(b, &r); err != nil {
 		return err
@@ -6770,7 +7059,7 @@ func (cmd *WalletPassphraseChangeCmd) MarshalJSON() ([]byte, error) {
 // UnmarshalJSON unmarshals the JSON encoding of cmd into cmd.  Part of
 // the Cmd interface.
 func (cmd *WalletPassphraseChangeCmd) UnmarshalJSON(b []byte) error {
-	// Unmashal into a RawCmd
+	// Unmarshal into a RawCmd
 	var r RawCmd
 	if err := json.Unmarshal(b, &r); err != nil {
 		return err
